@@ -11,7 +11,7 @@ import SwiftUI
 struct DivideMusicPlayerApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            TopScreenView()
         }
     }
 }
