@@ -17,13 +17,11 @@ class MusicDetailViewModel: NSObject, ObservableObject {
     
     @Published var currentTime: Double = 0.0
     @Published var musicData: DivideMusicData?
+    @Published var isDivide = false
     
-    private(set) var objectWillChange: ObservableObjectPublisher = .init()
     private var notificationToken: NotificationToken?
     
     var duration: Double = 0.0
-    
-    @Published var isDivide = false
     
     var title: String {
         return mediaItem.title ?? "タイトル無し"
@@ -44,13 +42,10 @@ class MusicDetailViewModel: NSObject, ObservableObject {
                 realm.add(self!.musicData!)
             }
         }
-        
-        initNotification()
     }
     
     deinit {
         stop()
-        notificationToken?.invalidate()
     }
 }
 
@@ -103,18 +98,6 @@ extension MusicDetailViewModel {
         try! realm.write { [weak self] in
             self!.musicData?.divideTime = divideTime
         }
-    }
-    
-    private func initNotification() {
-        notificationToken = musicData?.observe({ [weak self] change in
-            switch change {
-            case .change(_, _):
-                self?.objectWillChange.send()
-                break
-                
-            default :
-                break
-            }
-        })
+        
     }
 }

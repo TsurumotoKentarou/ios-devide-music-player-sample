@@ -62,6 +62,9 @@ struct MusicDetailView: View {
                 hideKeyboard()
             }
         }
+        .onDisappear() {
+            viewModel.stop()
+        }
         .navigationTitle(viewModel.title)
         .navigationBarTitleDisplayMode(.inline)
     }
